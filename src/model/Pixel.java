@@ -212,7 +212,7 @@ public class Pixel {
 	 * @param valueNoir the pixel's JAUNE value
 	 */
 	public void setNoir(int valueNoir) {
-		valueARGB = (valueARGB & 0xFFFFFF00) | ((valueNoir & 0xff));
+		valueARGB = (valueARGB) | ((valueNoir & 0xff));
 	}
 
 	/**

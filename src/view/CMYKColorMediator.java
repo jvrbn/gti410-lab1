@@ -63,8 +63,8 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
                 magentaImage.setRGB(i,j,rgb);
             }
         }
-        if (cyanCS != null) {
-            cyanCS.update(cyanImage);
+        if (magentaCS != null) {
+            magentaCS.update(magentaImage);
         }
     }
 
@@ -77,8 +77,8 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
                 jauneImage.setRGB(i,j,rgb);
             }
         }
-        if (cyanCS != null) {
-            cyanCS.update(cyanImage);
+        if (jauneCS != null) {
+            jauneCS.update(jauneImage);
         }
     }
 
@@ -88,11 +88,11 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
             p.setNoir((int)(((double) i / (double)imageWidth)*255.0));
             int rgb = p.getARGB();
             for (int j = 0; j<imageHeigth; j++) {
-                jauneImage.setRGB(i,j,rgb);
+                noirImage.setRGB(i,j,rgb);
             }
         }
-        if (cyanCS != null) {
-            cyanCS.update(cyanImage);
+        if (noirCS != null) {
+            noirCS.update(noirImage);
         }
     }
 
