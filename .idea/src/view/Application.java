@@ -35,11 +35,12 @@ import controller.Dispatcher;
  * @version $Revision: 1.22 $
  */
 public class Application extends JFrame {
-  
+
   	private Window window;
   	private Menu menu;
   	private Document doc;
-	
+
+  	
 	private JPanel parametersPanel;
 	
   	static Application theInstance;
