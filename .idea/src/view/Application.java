@@ -41,6 +41,7 @@ public class Application extends JFrame {
   	private Document doc;
 
 	private JPanel parametersPanel;
+
 	
   	static Application theInstance;
   	
