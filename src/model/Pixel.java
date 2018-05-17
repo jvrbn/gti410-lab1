@@ -208,6 +208,14 @@ public class Pixel {
 	}
 
 	/**
+	 * Sets an attriute of the pixel
+	 * @param valueNoir the pixel's JAUNE value
+	 */
+	public void setNoir(int valueNoir) {
+		valueARGB = (valueARGB & 0xFFFFFF00) | ((valueNoir & 0xff));
+	}
+
+	/**
 	 * Object's toString() method redefinition
 	 */
 	public String toString() {
