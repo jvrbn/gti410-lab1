@@ -42,7 +42,6 @@ public class Application extends JFrame {
 
 	private JPanel parametersPanel;
 
-
   	static Application theInstance;
   	
 	/**
