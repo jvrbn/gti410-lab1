@@ -57,7 +57,8 @@ public class Application extends JFrame {
 	public Document getActiveDocument(){
 		return doc;
 	}
-	
+
+
 	/**
 	 * Get the parameter panel. 
 	 * @return
