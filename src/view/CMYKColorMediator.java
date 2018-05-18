@@ -62,6 +62,7 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         }
     }
 
+
     public void computeMagentaImage(int red, int green, int blue){
         Pixel p = new Pixel(red, green, blue, 255);
         for (int i = 0; i < imageWidth; i++){
