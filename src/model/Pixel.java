@@ -196,7 +196,7 @@ public class Pixel {
 	 * @param valueMagenta the pixel's MAGENTA value
 	 */
 	public void setMagenta(int valueMagenta) {
-		valueARGB = (valueARGB & 0xFFFFFF00) | ((valueMagenta & 0xff));
+		valueARGB = (valueARGB & 0xFFFF00FF) | ((valueMagenta & 0xff));
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class Pixel {
 	 * @param valueJaune the pixel's JAUNE value
 	 */
 	public void setJaune(int valueJaune) {
-		valueARGB = (valueARGB & 0xFFFFFF00) | ((valueJaune & 0xff));
+		valueARGB = (valueARGB & 0xFF00FFFF) | ((valueJaune & 0xff));
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class Pixel {
 	 * @param valueNoir the pixel's JAUNE value
 	 */
 	public void setNoir(int valueNoir) {
-		valueARGB = (valueARGB) | ((valueNoir & 0xff));
+		valueARGB =  ((valueNoir & 0xff));
 	}
 
 	/**
