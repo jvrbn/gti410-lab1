@@ -55,8 +55,12 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
             }
         }
 
-        System.out.println("slider :"+ cyan);
-        System.out.println("color:" + (1 - p.getRed()/255));
+        System.out.println("-----cyan----");
+        System.out.println("color red:" + p.getRed());
+        System.out.println("color green:" + p.getGreen());
+        System.out.println("color blue:" + p.getBlue());
+        System.out.println("-------------");
+
         if (cyanCS != null) {
             cyanCS.update(cyanImage);
         }
@@ -72,6 +76,13 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
                 magentaImage.setRGB(i,j,rgb);
             }
         }
+
+        System.out.println("----magenta-----");
+        System.out.println("color red:" + p.getRed());
+        System.out.println("color green:" + p.getGreen());
+        System.out.println("color blue:" + p.getBlue());
+        System.out.println("-------------");
+
         if (magentaCS != null) {
             magentaCS.update(magentaImage);
         }
@@ -86,6 +97,13 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
                 jauneImage.setRGB(i,j,rgb);
             }
         }
+
+        System.out.println("----yellow----");
+        System.out.println("color red:" + p.getRed());
+        System.out.println("color green:" + p.getGreen());
+        System.out.println("color blue:" + p.getBlue());
+        System.out.println("-------------");
+
         if (jauneCS != null) {
             jauneCS.update(jauneImage);
         }
@@ -110,10 +128,17 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         Pixel currentColor = new Pixel(red, green, blue);
         if(currentColor.getARGB() == result.getPixel().getARGB()) return;
 
-        cyan = (1 - result.getPixel().getRed()/255 - result.getPixel().getNoir());
-        magenta = 1 - result.getPixel().getGreen()/255;
-        jaune = 1 - result.getPixel().getBlue()/255;
+        cyan = result.getPixel().getCyan();
+        magenta = result.getPixel().getMagenta();
+        jaune = result.getPixel().getJaune();
         noir = result.getPixel().getNoir();
+
+        //System.out.println("color Cyan :"+ currentColor.getCyan());
+
+        System.out.println("color red:" + result.getPixel().getRed());
+        System.out.println("color green:" + result.getPixel().getGreen());
+        System.out.println("color blue:" + result.getPixel().getBlue());
+
 
         cyanCS.setValue(cyan);
         magentaCS.setValue(magenta);
@@ -162,6 +187,10 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
 
         Pixel pixel = new Pixel(red, green, blue, 255);
         result.setPixel(pixel);
+
+        System.out.println("color red:" + result.getPixel().getRed());
+        System.out.println("color green:" + result.getPixel().getGreen());
+        System.out.println("color blue:" + result.getPixel().getBlue());
     }
 
     public BufferedImage getCyanImage(){

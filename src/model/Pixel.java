@@ -110,7 +110,7 @@ public class Pixel {
 	 * @return the pixel's Black value
 	 */
 	public int getNoir(){
-		return 1 - Math.min(Math.min(getCyan(),getMagenta()), getJaune());
+		return 1 - Math.max(Math.max(getRed()/255,getGreen()/255), getBlue()/255);
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class Pixel {
 	 * @param valueMagenta the pixel's MAGENTA value
 	 */
 	public void setMagenta(int valueMagenta) {
-		valueARGB = (valueARGB & 0xFFFF00FF) | ((valueMagenta & 0xff));
+		valueARGB = (valueARGB & 0xffff00ff) | ((valueMagenta & 0xff));
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class Pixel {
 	 * @param valueJaune the pixel's JAUNE value
 	 */
 	public void setJaune(int valueJaune) {
-		valueARGB = (valueARGB & 0xFFFFFF00) | ((valueJaune & 0xff));
+		valueARGB = (valueARGB & 0xffffff00) | ((valueJaune & 0xff));
 	}
 
 	/**
