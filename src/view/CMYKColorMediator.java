@@ -15,6 +15,9 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
     int magenta;
     int jaune;
     int noir;
+    int red;
+    int green;
+    int blue;
     BufferedImage cyanImage;
     BufferedImage magentaImage;
     BufferedImage jauneImage;
@@ -37,7 +40,9 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         magentaImage = new BufferedImage(imageWidth, imageHeigth, BufferedImage.TYPE_INT_ARGB);
         jauneImage = new BufferedImage(imageWidth, imageHeigth, BufferedImage.TYPE_INT_ARGB);
         noirImage = new BufferedImage(imageHeigth, imageHeigth, BufferedImage.TYPE_INT_ARGB);
-
+        computeCyanImage(red, green, blue);
+        computeMagentaImage(red, green, blue);
+        computeJauneImage(red, green, blue);
     }
 
     public void computeCyanImage(int red, int green, int blue){
@@ -82,8 +87,8 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         }
     }
 
-    public void computeNoirImage(int cyan, int magenta, int jaune){
-        Pixel p = new Pixel(cyan, magenta, jaune, 255);
+    public void computeNoirImage(int red, int green, int blue){
+        Pixel p = new Pixel(red, green, blue, 255);
         for (int i = 0; i < imageWidth; i++){
             p.setNoir((int)(((double) i / (double)imageWidth)*255.0));
             int rgb = p.getARGB();
@@ -98,7 +103,7 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
 
     @Override
     public void update() {
-        Pixel currentColor = new Pixel(cyan, magenta, jaune);
+        Pixel currentColor = new Pixel(red, green, blue);
         if(currentColor.getARGB() == result.getPixel().getARGB()) return;
 
         cyan = result.getPixel().getCyan();
