@@ -29,10 +29,10 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
     CMYKColorMediator(ColorDialogResult result, int imageWidth, int imageHeigth){
         this.imageWidth = imageWidth;
         this.imageHeigth = imageHeigth;
-        this.red = result.getPixel().getRed();
-        this.green = result.getPixel().getGreen();
-        this.blue = result.getPixel().getBlue();
-        this.noir = Math.max(Math.max(red, green), blue);
+        this.cyan = result.getPixel().getCyan();
+        this.magenta = result.getPixel().getMagenta();
+        this.jaune = result.getPixel().getJaune();
+        this.noir = result.getPixel().getNoir();
         this.result = result;
         result.addObserver(this);
 
@@ -43,8 +43,6 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         computeCyanImage(red, green, blue);
         computeMagentaImage(red, green, blue);
         computeJauneImage(red, green, blue);
-        computeNoirImage(red, green, blue);
-
     }
 
     public void computeCyanImage(int red, int green, int blue){
@@ -108,19 +106,18 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         Pixel currentColor = new Pixel(red, green, blue);
         if(currentColor.getARGB() == result.getPixel().getARGB()) return;
 
-        cyan = 1 - result.getPixel().getRed()/255;
-        magenta = 1 - result.getPixel().getGreen()/255;
-        jaune = 1 - result.getPixel().getBlue()/255;
-        noir = 1 - Math.min(Math.min(cyan, magenta), jaune);
+        cyan = result.getPixel().getCyan();
+        magenta = result.getPixel().getMagenta();
+        jaune = result.getPixel().getJaune();
+        noir = result.getPixel().getNoir();
 
         cyanCS.setValue(cyan);
         magentaCS.setValue(magenta);
         jauneCS.setValue(jaune);
         noirCS.setValue(noir);
-        computeCyanImage(red, green, blue);
-        computeMagentaImage(red, green, blue);
-        computeJauneImage(red, green, blue);
-        computeNoirImage(red, green, blue);
+        computeCyanImage(cyan, magenta, jaune);
+        computeMagentaImage(cyan, magenta, jaune);
+        computeJauneImage(cyan, magenta, jaune);
     }
 
     @Override
@@ -129,43 +126,34 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         boolean updateMagenta = false;
         boolean updateJaune = false;
         boolean updateNoir = false;
-
         if (cs == cyanCS && v != cyan){
             cyan = v;
             updateJaune = true;
             updateMagenta = true;
-            updateNoir = true;
         }
         if (cs == magentaCS && v != magenta) {
             magenta = v;
             updateCyan = true;
             updateJaune = true;
-            updateNoir = true;
+
         }
         if (cs == jauneCS && v != jaune) {
             jaune = v;
             updateCyan = true;
             updateMagenta = true;
-            updateNoir = true;
-        }
-        if (cs == noirCS && v != noir){
-            noir = v;
-            updateCyan = true;
-            updateJaune = true;
-            updateMagenta = true;
         }
         if (updateCyan) {
-            computeCyanImage(red, green, blue);
+            computeCyanImage(cyan, magenta, jaune);
         }
         if (updateMagenta) {
-            computeMagentaImage(red, green, blue);
+            computeMagentaImage(cyan, magenta, jaune);
         }
         if (updateJaune) {
-            computeJauneImage(red, green, blue);
+            computeJauneImage(cyan, magenta, jaune);
         }
 
         if (updateNoir) {
-            computeNoirImage(red, green, blue);
+            computeNoirImage(cyan, magenta, jaune);
         }
 
         Pixel pixel = new Pixel(cyan, magenta, jaune, 255);
@@ -208,8 +196,4 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         slider.addObserver(this);
     }
 }
-
-
-
-
 
