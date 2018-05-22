@@ -41,6 +41,7 @@ public class ColorDialog extends JDialog {
 	private JButton okButton;
 	private RGBColorMediator rgbMediator;
 	private CMYKColorMediator cmykMediator;
+	private HSVColorMediator hsvMediator;
 	private ActionListener okActionListener;
 	private ColorDialogResult result;
 	
@@ -118,7 +119,7 @@ public class ColorDialog extends JDialog {
 	}
 	
 	private JPanel createCMYKPanel(ColorDialogResult result, int imageWidths) {
-		cmykMediator = new CMYKColorMediator(result, imageWidths, 30);
+		/*cmykMediator = new CMYKColorMediator(result, imageWidths, 30);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -136,13 +137,29 @@ public class ColorDialog extends JDialog {
 		panel.add(csMagenta);
 		panel.add(csJaune);
 		panel.add(csNoir);
+		*/
+		JPanel panel = new JPanel();
 
 		return panel;
 	}
 	
-	private JPanel createHSVPanel(ColorDialogResult result, int imageWidths) {	
+	private JPanel createHSVPanel(ColorDialogResult result, int imageWidths) {
+		hsvMediator = new HSVColorMediator(result, imageWidths, 30);
+
 		JPanel panel = new JPanel();
-		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		ColorSlider csHue = new ColorSlider("H:", hsvMediator.getHue(), hsvMediator.getHueImage());
+		ColorSlider csSaturation = new ColorSlider("S:", hsvMediator.getSaturation(), hsvMediator.getSaturationImage());
+		ColorSlider csValue = new ColorSlider("V:", hsvMediator.getValue(), hsvMediator.getValueImage());
+
+		hsvMediator.setHueCS(csHue);
+		hsvMediator.setSaturationCS(csSaturation);
+		hsvMediator.setValueCS(csValue);
+
+		panel.add(csHue);
+		panel.add(csSaturation);
+		panel.add(csValue);
+
 		return panel;
 	}
 }
