@@ -50,6 +50,7 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
     public void RGBToCMYK(int red, int green, int blue){
 
         cyan = 1 - red/255;
+        cyan = 255 - noir - red/255;
         magenta = 1 - green/255;
         jaune = 1 - blue/255;
         noir = Math.max(Math.max(cyan, magenta),jaune);
