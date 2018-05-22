@@ -122,10 +122,10 @@ public class ColorDialog extends JDialog {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		ColorSlider csCyan = new ColorSlider("C:", result.getPixel().getCyan(), cmykMediator.getCyanImage());
-		ColorSlider csMagenta = new ColorSlider("M:", result.getPixel().getMagenta(), cmykMediator.getMagentaImage());
-		ColorSlider csJaune = new ColorSlider("Y:", result.getPixel().getJaune(), cmykMediator.getJauneImage());
-		ColorSlider csNoir = new ColorSlider("K:", result.getPixel().getNoir(), cmykMediator.getNoirImage());
+		ColorSlider csCyan = new ColorSlider("C:", CMYKColorMediator.getCyan(), cmykMediator.getCyanImage());
+		ColorSlider csMagenta = new ColorSlider("M:", CMYKColorMediator.getMagenta(), cmykMediator.getMagentaImage());
+		ColorSlider csJaune = new ColorSlider("Y:", CMYKColorMediator.getJaune(), cmykMediator.getJauneImage());
+		ColorSlider csNoir = new ColorSlider("K:", CMYKColorMediator.getNoir(), cmykMediator.getNoirImage());
 
 		cmykMediator.setCyanCS(csCyan);
 		cmykMediator.setJauneCS(csJaune);

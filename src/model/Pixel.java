@@ -106,38 +106,6 @@ public class Pixel {
 	}
 
 	/**
-	 * Return an attribute of the pixel
-	 * @return the pixel's Black value
-	 */
-	public int getNoir(){
-		return 1 - Math.max(Math.max(getRed()/255,getGreen()/255), getBlue()/255);
-	}
-
-	/**
-	 * Return an attribute of the pixel
-	 * @return the pixel's Cyan value
-	 */
-	public int getCyan() {
-		return 1 - getRed()/255 ;
-	}
-
-	/**
-	 * Return an attribute of the pixel
-	 * @return the pixel's Magenta value
-	 */
-	public int getMagenta() {
-		return 1 - getGreen()/255 ;
-	}
-
-	/**
-	 * Return an attribute of the pixel
-	 * @return the pixel's Jaune value
-	 */
-	public int getJaune() {
-		return 1 - getBlue()/255;
-	}
-
-	/**
 	 * Sets an attribute of the pixel
 	 * @param valueARGB the pixel's ARGB value
 	 */
@@ -181,38 +149,6 @@ public class Pixel {
 	 */
 	public void setBlue(int valueBlue) {
 		valueARGB = (valueARGB & 0xffffff00) | ((valueBlue & 0xff));
-	}
-
-	/**
-	 * Sets an attriute of the pixel
-	 * @param valueCyan the pixel's CYAN value
-	 */
-	public void setCyan(int valueCyan) {
-		valueARGB = (valueARGB & 0xff00ffff) | ((valueCyan & 0xff));
-	}
-
-	/**
-	 * Sets an attriute of the pixel
-	 * @param valueMagenta the pixel's MAGENTA value
-	 */
-	public void setMagenta(int valueMagenta) {
-		valueARGB = (valueARGB & 0xffff00ff) | ((valueMagenta & 0xff));
-	}
-
-	/**
-	 * Sets an attriute of the pixel
-	 * @param valueJaune the pixel's JAUNE value
-	 */
-	public void setJaune(int valueJaune) {
-		valueARGB = (valueARGB & 0xffffff00) | ((valueJaune & 0xff));
-	}
-
-	/**
-	 * Sets an attriute of the pixel
-	 * @param valueNoir the pixel's JAUNE value
-	 */
-	public void setNoir(int valueNoir) {
-		valueARGB =  ((valueNoir & 0xff));
 	}
 
 	/**
