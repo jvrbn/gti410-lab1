@@ -106,6 +106,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         green = result.getPixel().getGreen();
         blue = result.getPixel().getBlue();
 
+
         hueCS.setValue(hue);
         saturationCS.setValue(saturation);
         valueCS.setValue(value);
