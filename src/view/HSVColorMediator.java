@@ -71,6 +71,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
      */
     public float[] RGBToHSV(int r, int g, int b){
 
+        /*
         float[] hsv = new float[3];
 
         float _red = r/255;
@@ -105,13 +106,15 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
             hsv[0] = (hsv[0]+360)/360*255;
         }
 
+       hsv[0] = Math.round(hsv[0]);
+*/
 
-        /*float[] hsv = new float[3];
+        float[] hsv = new float[3];
         Color.RGBtoHSB(r,g,b,hsv);
-        hsv[0] = hsv[0]*255;
-        hsv[1] = hsv[1];
-        hsv[2] = hsv[2];
-        */
+        hsv[0] = Math.round(hsv[0]*255);
+        hsv[1] = Math.round(hsv[1]*255);
+        hsv[2] = Math.round(hsv[2]*255);
+
         return hsv;
 
     }
@@ -169,7 +172,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
             b = v;
         }
 
-        else if(_h <= 6){
+        else if(_h == 5){
             r = v;
             g = p;
             b = q;
