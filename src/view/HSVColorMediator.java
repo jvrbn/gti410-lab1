@@ -41,11 +41,11 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         saturationImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
         valueImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
 
-        float[] hsv = RGBToHSV(red,green,blue);
+        int[] hsv = RGBToHSV(red,green,blue);
 
-        hue = (int) hsv[HUE];
-        saturation = (int) hsv[SATURATION];
-        value = (int) hsv[VALUE];
+        hue = hsv[HUE];
+        saturation = hsv[SATURATION];
+        value = hsv[VALUE];
 
         int[] rgb = HSVToRGB(hue, saturation, value);
 
@@ -69,53 +69,23 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
      * @param g green pixel
      * @param b blue pixel
      */
-    public float[] RGBToHSV(int r, int g, int b){
+    public int[] RGBToHSV(int r, int g, int b){
 
-        /*
-        float[] hsv = new float[3];
-
-        float _red = r/255;
-        float _green = g/255;
-        float _blue = b/255;
-
-        float max = Math.max(Math.max(_red,_green),_blue);
-        float min = Math.min(Math.min(_red,_green),_blue);
-
-        //value
-        hsv[2] = max*255;
-
-        //saturation
-        hsv[1] = ((max-min)/max)*255;
-
-        //hue
-        if(_red == max){
-            hsv[0] = ((_green - _red)/(max-min))/360*255;
-        }
-
-        else if(_green == max){
-            hsv[0] = (2 + (_blue - _red)/(max-min))/360*255;
-        }
-
-        else{
-            hsv[0] = (4 + (_red - _green)/(max-min))/360*255;
-        }
-
-        hsv[0] = 60 * hsv[0];
-
-        if(hsv[0]<0){
-            hsv[0] = (hsv[0]+360)/360*255;
-        }
-
-       hsv[0] = Math.round(hsv[0]);
-*/
 
         float[] hsv = new float[3];
+        int[] hsvInt = new int[3];
+
         Color.RGBtoHSB(r,g,b,hsv);
+
         hsv[0] = Math.round(hsv[0]*255);
         hsv[1] = Math.round(hsv[1]*255);
         hsv[2] = Math.round(hsv[2]*255);
 
-        return hsv;
+        hsvInt[0] = (int) hsv[0];
+        hsvInt[1] = (int) hsv[1];
+        hsvInt[2] = (int) hsv[2];
+
+        return hsvInt;
 
     }
 
@@ -222,7 +192,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         Pixel pixel = new Pixel(red, green, blue, 255);
         result.setPixel(pixel);
 
-        float[] hsv = RGBToHSV(red,green,blue);
+        int[] hsv = RGBToHSV(red,green,blue);
         int[] rgb = HSVToRGB(hue, saturation, value);
         System.out.println("hue: " + hsv[0]);
         System.out.println("saturation: " + hsv[1]);
@@ -247,7 +217,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         green = result.getPixel().getGreen();
         blue = result.getPixel().getBlue();
 
-        float[] hsvColor = RGBToHSV(red, green, blue);
+        int[] hsvColor = RGBToHSV(red, green, blue);
 
         int _hue = (int) hsvColor[HUE];
         int _saturation = (int) hsvColor[SATURATION];
@@ -274,7 +244,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
 
         Pixel p = new Pixel(red, green, blue, 255);
 
-        float[] hsv = RGBToHSV(red,green,blue);
+        int[] hsv = RGBToHSV(red,green,blue);
 
         int [] rgbArray;
 
@@ -296,7 +266,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
 
     public void computeSaturationImage(float hue, float saturation, float value) {
         Pixel p = new Pixel(red, green, blue, 255);
-        RGBToHSV(red,green,blue);
+        int[] hsv = RGBToHSV(red,green,blue);
 
         int[] rgbArray;
         for (int i = 0; i<imagesWidth; ++i) {
@@ -317,7 +287,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
 
     public void computeValueImage(float hue, float saturation, float value) {
         Pixel p = new Pixel(red, green, blue, 255);
-        RGBToHSV(red,green,blue);
+        int[] hsv = RGBToHSV(red,green,blue);
         int[] rgbArray;
         for (int i = 0; i<imagesWidth; ++i) {
             value = ((int)(((double)i / (double)imagesWidth)*255.0));
