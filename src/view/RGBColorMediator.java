@@ -93,6 +93,7 @@ class RGBColorMediator extends Object implements SliderObserver, ObserverIF {
 		for (int i = 0; i<imagesWidth; ++i) {
 			p.setRed((int)(((double)i / (double)imagesWidth)*255.0));
 			int rgb = p.getARGB();
+            System.out.println("RGB red: " + rgb);
 			for (int j = 0; j<imagesHeight; ++j) {
 				redImage.setRGB(i, j, rgb);
 			}
@@ -107,6 +108,7 @@ class RGBColorMediator extends Object implements SliderObserver, ObserverIF {
 		for (int i = 0; i<imagesWidth; ++i) {
 			p.setGreen((int)(((double)i / (double)imagesWidth)*255.0)); 
 			int rgb = p.getARGB();
+            System.out.println("RGB green: " + rgb);
 			for (int j = 0; j<imagesHeight; ++j) {
 				greenImage.setRGB(i, j, rgb);
 			}
@@ -121,6 +123,7 @@ class RGBColorMediator extends Object implements SliderObserver, ObserverIF {
 		for (int i = 0; i<imagesWidth; ++i) {
 			p.setBlue((int)(((double)i / (double)imagesWidth)*255.0)); 
 			int rgb = p.getARGB();
+			System.out.println("RGB blue: " + rgb);
 			for (int j = 0; j<imagesHeight; ++j) {
 				blueImage.setRGB(i, j, rgb);
 			}

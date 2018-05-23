@@ -42,6 +42,8 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
 
         int rgbToCMYK[] = RGBtoCMYK(red, green, blue);
 
+        this.noir = rgbToCMYK[3];
+
         computeCyanImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
         computeMagentaImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
         computeJauneImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
@@ -87,9 +89,9 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
 
         int cmykToRGB[] = new int[3];
 
-        cmykToRGB[0] = ((255 - cyan)*(255-noir))/255;
-        cmykToRGB[1] = ((255 - magenta)*(255-noir))/255;
-        cmykToRGB[2] = ((255 - jaune)*(255-noir))/255;
+        cmykToRGB[0] = Math.round(((255 - cyan)*(255-noir))/255);
+        cmykToRGB[1] = Math.round(((255 - magenta)*(255-noir))/255);
+        cmykToRGB[2] = Math.round(((255 - jaune)*(255-noir))/255);
 
         return cmykToRGB;
     }
@@ -172,13 +174,16 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         Pixel p = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2]);
 
         for (int i = 0; i < imageWidth; i++) {
+
+            int currentColor = (int)Math.round((((double) i / (double)imageWidth))*255);
+            cmykInRGB = CMYKtoRGB(cyan, magenta, jaune, currentColor);
             p.setRed(cmykInRGB[0]);
             p.setGreen(cmykInRGB[1]);
             p.setBlue(cmykInRGB[2]);
             int rgb = p.getARGB();
             System.out.println("RGB noir: " + rgb);
             for (int j = 0; j < imageHeigth; j++) {
-               // noirImage.setRGB(i, j, rgb);
+               //noirImage.setRGB(i, j, rgb);
             }
         }
         if (noirCS != null) {
