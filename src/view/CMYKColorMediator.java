@@ -29,39 +29,79 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
     CMYKColorMediator(ColorDialogResult result, int imageWidth, int imageHeigth) {
         this.imageWidth = imageWidth;
         this.imageHeigth = imageHeigth;
-
+        this.result = result;
+        result.addObserver(this);
         this.red = result.getPixel().getRed();
         this.green = result.getPixel().getGreen();
         this.blue = result.getPixel().getBlue();
-
-        this.result = result;
-        result.addObserver(this);
 
         cyanImage = new BufferedImage(imageWidth, imageHeigth, BufferedImage.TYPE_INT_ARGB);
         magentaImage = new BufferedImage(imageWidth, imageHeigth, BufferedImage.TYPE_INT_ARGB);
         jauneImage = new BufferedImage(imageWidth, imageHeigth, BufferedImage.TYPE_INT_ARGB);
         noirImage = new BufferedImage(imageHeigth, imageHeigth, BufferedImage.TYPE_INT_ARGB);
 
-        computeCyanImage(red, green, blue);
-        computeMagentaImage(red, green, blue);
-        computeJauneImage(red, green, blue);
+        int rgbToCMYK[] = RGBtoCMYK(red, green, blue);
+
+        computeCyanImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
+        computeMagentaImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
+        computeJauneImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
+        computeNoirImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
     }
 
-    public void RGBToCMYK(int red, int green, int blue){
+    /**
+     * Code inspiré de l'algorithme de ce site web :
+     * https://www.rapidtables.com/convert/color/rgb-to-cmyk.html
+     * Conversion de la couleur en RGB vers CMYK
+     * @param red Couleur rouge
+     * @param green Couleur verte
+     * @param blue Couleur bleu
+     * @return Tableau contenant les couleurs cyan, magenta, jaune et noir
+     */
+    public int[] RGBtoCMYK(int red, int green, int blue){
 
-        cyan = 1 - red/255;
-        cyan = 255 - noir - red/255;
-        magenta = 1 - green/255;
-        jaune = 1 - blue/255;
-        noir = Math.max(Math.max(cyan, magenta),jaune);
+        noir = Math.max(Math.max(1 - red/255, 1 - green/255),1 - blue/255);
+        cyan = (255 - noir - red/255)/(255 - noir);
+        magenta = (255 - noir - green/255)/(255 - noir);
+        jaune = (255 - noir - blue/255)/(255 - noir);
+
+        int rgbToCMYK[] = new int[4];
+        rgbToCMYK[0] = cyan;
+        rgbToCMYK[1] = jaune;
+        rgbToCMYK[2] = magenta;
+        rgbToCMYK[3] = noir;
+
+        return rgbToCMYK;
     }
 
-    public void computeCyanImage(int red, int green, int blue) {
-        RGBToCMYK(red, green, blue);
-        Pixel p = new Pixel(red, green, blue, 255);
+    /**
+     * Code inspiré de l'algorithme de ce site web :
+     * https://www.rapidtables.com/convert/color/rgb-to-cmyk.html
+     * Conversion de la couleur en CMYK vers RGB
+     * @param cyan Couleur cyan
+     * @param magenta Couleur magenta
+     * @param jaune Couleur jaune
+     * @param noir Ton noir
+     * @return Tableau contenant les couleurs red, green, blue
+     */
+    public int[] CMYKtoRGB(int cyan, int magenta, int jaune, int noir){
+
+        int cmykToRGB[] = new int[3];
+
+        cmykToRGB[0] = ((255 - cyan)*(255-noir))/255;
+        cmykToRGB[1] = ((255 - magenta)*(255-noir))/255;
+        cmykToRGB[2] = ((255 - jaune)*(255-noir))/255;
+
+        return cmykToRGB;
+    }
+
+    public void computeCyanImage(int cyan, int magenta, int jaune, int noir) {
+        int cmykInRGB[] =  CMYKtoRGB(cyan, magenta, jaune, noir);
+        Pixel p = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2], 255);
+
         for (int i = 0; i < imageWidth; i++) {
-            p.setRed((int) ((255 - noir - (double)i/(double)imageWidth))/(255 - noir));
+            p.setRed((int)(255 - noir - ((double) i / (double) imageWidth * (255 - noir))));
             int rgb = p.getARGB();
+            System.out.println("RGB cyan: " + rgb);
             for (int j = 0; j < imageHeigth; j++) {
                 cyanImage.setRGB(i, j, rgb);
             }
@@ -79,12 +119,14 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
     }
 
 
-    public void computeMagentaImage(int red, int green, int blue) {
-        RGBToCMYK(red, green, blue);
-        Pixel p = new Pixel(red, green, blue, 255);
+    public void computeMagentaImage(int cyan, int magenta, int jaune, int noir) {
+        int cmykInRGB[] =  CMYKtoRGB(cyan, magenta, jaune, noir);
+        Pixel p = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2], 255);
+
         for (int i = 0; i < imageWidth; i++) {
-            p.setGreen((int) ((255 - noir - (double)i/(double)imageWidth))/(255 - noir));
+            p.setGreen((int)(255 - noir - ((double) i / (double) imageWidth * (255 - noir))));
             int rgb = p.getARGB();
+            System.out.println("RGB magenta : " + rgb);
             for (int j = 0; j < imageHeigth; j++) {
                 magentaImage.setRGB(i, j, rgb);
             }
@@ -101,18 +143,20 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         }
     }
 
-    public void computeJauneImage(int red, int green, int blue) {
-        RGBToCMYK(red, green, blue);
-        Pixel p = new Pixel(red, green, blue, 255);
+    public void computeJauneImage(int cyan, int magenta, int jaune, int noir) {
+        int cmykInRGB[] =  CMYKtoRGB(cyan, magenta, jaune, noir);
+        Pixel p = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2], 255);
+
         for (int i = 0; i < imageWidth; i++) {
-            p.setBlue((int) ((255 - noir - (double)i/(double)imageWidth))/(255 - noir));
+            p.setBlue((int)(255 - noir - ((double) i / (double) imageWidth * (255 - noir))));
             int rgb = p.getARGB();
+            System.out.println("RGB jaune: " + rgb);
             for (int j = 0; j < imageHeigth; j++) {
                 jauneImage.setRGB(i, j, rgb);
             }
         }
 
-        System.out.println("----yellow----");
+        System.out.println("----jaune----");
         System.out.println("color red:" + p.getRed());
         System.out.println("color green:" + p.getGreen());
         System.out.println("color blue:" + p.getBlue());
@@ -123,14 +167,18 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         }
     }
 
-    public void computeNoirImage(int red, int green, int blue) {
-        RGBToCMYK(red, green, blue);
-        Pixel p = new Pixel(red, green, blue, 255);
+    public void computeNoirImage(int cyan, int magenta, int jaune, int noir) {
+        int cmykInRGB[] =  CMYKtoRGB(cyan, magenta, jaune, noir);
+        Pixel p = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2]);
+
         for (int i = 0; i < imageWidth; i++) {
-            noir = ((int) ((255 - noir - (double)i/(double)imageWidth))/(255 - noir));
+            p.setRed(cmykInRGB[0]);
+            p.setGreen(cmykInRGB[1]);
+            p.setBlue(cmykInRGB[2]);
             int rgb = p.getARGB();
+            System.out.println("RGB noir: " + rgb);
             for (int j = 0; j < imageHeigth; j++) {
-                noirImage.setRGB(i, j, rgb);
+               // noirImage.setRGB(i, j, rgb);
             }
         }
         if (noirCS != null) {
@@ -143,26 +191,20 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         Pixel currentColor = new Pixel(red, green, blue,255);
         if (currentColor.getARGB() == result.getPixel().getARGB()) return;
 
-        cyan = result.getPixel().getRed();
-        magenta = result.getPixel().getGreen();
-        jaune = result.getPixel().getBlue();
-        noir = result.getPixel().getBlue();
+        red = result.getPixel().getRed();
+        green = result.getPixel().getGreen();
+        blue = result.getPixel().getBlue();
+        int rgbToCMYK[] = RGBtoCMYK(red, green, blue);
 
-        //System.out.println("color Cyan :"+ currentColor.getCyan());
+        cyanCS.setValue(rgbToCMYK[0]);
+        magentaCS.setValue(rgbToCMYK[1]);
+        jauneCS.setValue(rgbToCMYK[2]);
+        noirCS.setValue(rgbToCMYK[3]);
 
-        System.out.println("color red:" + result.getPixel().getRed());
-        System.out.println("color green:" + result.getPixel().getGreen());
-        System.out.println("color blue:" + result.getPixel().getBlue());
-
-
-        cyanCS.setValue(cyan);
-        magentaCS.setValue(magenta);
-        jauneCS.setValue(jaune);
-        noirCS.setValue(noir);
-        computeCyanImage(red, green, blue);
-        computeMagentaImage(red, green, blue);
-        computeJauneImage(red, green, blue);
-        computeNoirImage(red, green, blue);
+        computeCyanImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
+        computeMagentaImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
+        computeJauneImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
+        computeNoirImage(rgbToCMYK[0], rgbToCMYK[1], rgbToCMYK[2], rgbToCMYK[3]);
     }
 
     @Override
@@ -191,25 +233,22 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
             updateNoir = true;
         }
         if (updateCyan) {
-            computeCyanImage(red, green, blue);
+            computeCyanImage(cyan, magenta, jaune, noir);
         }
         if (updateMagenta) {
-            computeMagentaImage(red, green, blue);
+            computeMagentaImage(cyan, magenta, jaune, noir);
         }
         if (updateJaune) {
-            computeJauneImage(red, green, blue);
+            computeJauneImage(cyan, magenta, jaune, noir);
         }
 
         if (updateNoir) {
-            computeNoirImage(red, green, blue);
+            computeNoirImage(cyan, magenta, jaune, noir);
         }
 
-        Pixel pixel = new Pixel(red, green, blue, 255);
-        result.setPixel(pixel);
-
-        System.out.println("color red:" + result.getPixel().getRed());
-        System.out.println("color green:" + result.getPixel().getGreen());
-        System.out.println("color blue:" + result.getPixel().getBlue());
+        int cmykInRGB[] = CMYKtoRGB(cyan, magenta, jaune, noir);
+        Pixel currentColor = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2], 255);
+        result.setPixel(currentColor);
     }
 
     public BufferedImage getCyanImage() {
