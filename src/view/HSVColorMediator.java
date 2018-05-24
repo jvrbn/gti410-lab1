@@ -180,7 +180,9 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
             computeValueImage(hue, saturation, value);
         }
 
-        Pixel pixel = new Pixel(red, green, blue, 255);
+        int hsvToRGB[] = HSVToRGB(this.hue, this.value, this.saturation);
+
+        Pixel pixel = new Pixel(hsvToRGB[0], hsvToRGB[1], hsvToRGB[2], 255);
         result.setPixel(pixel);
     }
 
@@ -188,17 +190,16 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
      * @see model.ObserverIF#update()
      */
     public void update() {
+        int hsvToRGB[] = HSVToRGB(this.hue, this.value, this.saturation);
 
-        // When updated with the new "result" color, if the "currentColor"
-        // is aready properly set, there is no need to recompute the images.
-        Pixel currentColor = new Pixel(red, green, blue, 255);
+        Pixel currentColor = new Pixel(hsvToRGB[0], hsvToRGB[1], hsvToRGB[2], 255);
         if(currentColor.getARGB() == result.getPixel().getARGB()) return;
 
-        red = result.getPixel().getRed();
-        green = result.getPixel().getGreen();
-        blue = result.getPixel().getBlue();
+        this.red = result.getPixel().getRed();
+        this.green = result.getPixel().getGreen();
+        this.blue = result.getPixel().getBlue();
 
-        int[] hsvColor = RGBToHSV(red, green, blue);
+        int[] hsvColor = RGBToHSV(this.red, this.green, this.blue);
 
         hue = hsvColor[HUE];
         saturation = hsvColor[SATURATION];

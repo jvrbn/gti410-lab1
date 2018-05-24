@@ -181,9 +181,7 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
             p.setBlue((int)(255 - this.noir - ((double) i / (double) imageWidth * (255 - this.noir))));
             int rgb = p.getARGB();
             for (int j = 0; j < imageHeigth; j++) {
-               //noirImage.setRGB(j, i, rgb);
-                System.out.println("rgb: " + rgb);
-                //noirImage.setRGB(i, j ,rgb);
+               noirImage.setRGB(i, j, rgb);
             }
         }
         if (noirCS != null) {
