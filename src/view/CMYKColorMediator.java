@@ -264,7 +264,7 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
             computeNoirImage(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2]);
         }
 
-        Pixel currentColor = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2], this.noir);
+        Pixel currentColor = new Pixel(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2], 255);
         result.setPixel(currentColor);
     }
 

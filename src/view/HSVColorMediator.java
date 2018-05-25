@@ -209,7 +209,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         this.green = result.getPixel().getGreen();
         this.blue = result.getPixel().getBlue();
 
-        int[] hsvColor = RGBToHSV(this.red, this.green, this.blue);
+        int[] hsvColor = RGBToHSV(red, green, blue);
 
         hue = hsvColor[HUE];
         saturation = hsvColor[SATURATION];
