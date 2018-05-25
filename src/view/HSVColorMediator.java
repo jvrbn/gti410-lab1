@@ -232,7 +232,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         // harder to understand.
     }
 
-    public void computeHueImage(int red, int green, int blue) {
+    public void computeHueImage(int hue, int saturation, int value) {
         Pixel p = new Pixel(red,green,blue, 255);
 
         int[] rgbArray;
@@ -253,7 +253,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         }
     }
 
-    public void computeSaturationImage(int red, int green, int blue) {
+    public void computeSaturationImage(int hue, int saturation, int value) {
 
         Pixel p = new Pixel(red, green, blue, 255);
 
@@ -275,7 +275,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         }
     }
 
-    public void computeValueImage(int red, int green, int blue) {
+    public void computeValueImage(int hue, int saturation, int value) {
 
 
         Pixel p = new Pixel(red, green, blue, 255);
