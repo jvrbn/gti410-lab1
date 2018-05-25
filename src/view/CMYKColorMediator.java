@@ -79,7 +79,7 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         rgbToCMYK[0] = this.cyan;
         rgbToCMYK[1] = this.jaune;
         rgbToCMYK[2] = this.magenta;
-        rgbToCMYK[3] = this.noir;
+        rgbToCMYK[3] = Math.max(Math.max(1 - red/255, 1 - green/255),1 - blue/255);
 
         return rgbToCMYK;
     }
@@ -260,7 +260,6 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         if (updateJaune) {
             computeJauneImage(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2]);
         }
-
         if (updateNoir) {
             computeNoirImage(cmykInRGB[0], cmykInRGB[1], cmykInRGB[2]);
         }
