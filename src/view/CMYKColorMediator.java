@@ -203,10 +203,10 @@ public class CMYKColorMediator extends Object implements SliderObserver, Observe
         jauneCS.setValue(rgbInCMYK[JAUNE]);
         noirCS.setValue(rgbInCMYK[NOIR]);
 
-        computeCyanImage(cmykInRGB[RED], cmykInRGB[GREEN], cmykInRGB[BLUE]);
-        computeMagentaImage(cmykInRGB[RED], cmykInRGB[GREEN], cmykInRGB[BLUE]);
-        computeJauneImage(cmykInRGB[RED], cmykInRGB[GREEN], cmykInRGB[BLUE]);
-        computeNoirImage(cmykInRGB[RED], cmykInRGB[GREEN], cmykInRGB[BLUE]);
+        computeCyanImage(red, green, blue);
+        computeMagentaImage(red, green, blue);
+        computeJauneImage(red, green, blue);
+        computeNoirImage(red, green, blue);
     }
 
     @Override
