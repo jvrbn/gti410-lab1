@@ -40,7 +40,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
         saturationImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
         valueImage = new BufferedImage(imagesWidth, imagesHeight, BufferedImage.TYPE_INT_ARGB);
 
-        int[] rgbInHSV = RGBToHSV(red,green,blue);
+        int[] rgbInHSV = RGBToHSV(this.red, this.green, this.blue);
         this.hue = rgbInHSV[HUE];
         this.saturation = rgbInHSV[SATURATION];
         this.value = rgbInHSV[VALUE];
@@ -53,22 +53,21 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
 
     /**
      * Converts RGB to HSV
-     * source:https://cs.stackexchange.com/questions/64549/convert-hsv-to-rgb-colors
+     * source:https://www.rapidtables.com/convert/color/rgb-to-hsv.html
      * @param red red pixel
      * @param green green pixel
      * @param blue blue pixel
      */
     public int[] RGBToHSV(int red, int green, int blue){
 
+
         /*
             float max = Math.max(Math.max(red/255, green/255), blue/255);
             float min = Math.min(Math.min(red/255, green/255), blue/255);
             float delta = max - min;
-
             int h=0;
             int s=0;
             int v=0;
-
             if (delta == 0)
                 h = 0;
             else if (max == red/255)
@@ -77,37 +76,29 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
                 h = (int) (60 * ((blue/255 - red/255)/delta + 2));
             else if (max == blue/255)
                 h = (int) (60 * ((red/255 - green/255)/delta + 4));
-
             if (max == 0)
                 s= 0;
             else
                 s = (int) (delta/max);
-
             v = (int) max;
-
             int rgbInHSV[];
-
             rgbInHSV = new int[]{h/360 *255, s*255, v*255};
-
             return rgbInHSV;
-
 */
-         //Tableau pour les couleurs HSV
-         float[] hsv = new float[3];
-         int[] hsvInt = new int[3];
-         Color.RGBtoHSB(red,green,blue,hsv);
+        //Tableau pour les couleurs HSV
+        float[] hsv = new float[3];
+        int[] hsvInt = new int[3];
+        Color.RGBtoHSB(red,green,blue,hsv);
 
-         hsv[0] = Math.round(hsv[HUE]* 255);
-         hsv[1] = Math.round(hsv[SATURATION]*255);
-         hsv[2] = Math.round(hsv[VALUE]*255);
+        hsv[0] = Math.round(hsv[HUE]* 255);
+        hsv[1] = Math.round(hsv[SATURATION]*255);
+        hsv[2] = Math.round(hsv[VALUE]*255);
 
-         hsvInt[0] = (int) hsv[HUE];
-         hsvInt[1] = (int) hsv[SATURATION];
-         hsvInt[2] = (int) hsv[VALUE];
+        hsvInt[0] = (int) hsv[HUE];
+        hsvInt[1] = (int) hsv[SATURATION];
+        hsvInt[2] = (int) hsv[VALUE];
 
-         return hsvInt;
-
-
+        return hsvInt;
     }
 
     /**
@@ -298,6 +289,7 @@ public class HSVColorMediator extends Object implements SliderObserver, Observer
     }
 
     public void computeValueImage(int hue, int saturation, int value) {
+
 
         Pixel p = new Pixel(red, green, blue, 255);
 
