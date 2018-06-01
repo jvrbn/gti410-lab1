@@ -23,8 +23,8 @@ import javax.swing.event.ChangeListener;
 /**
  * <p>Title: SliderMediator</p>
  * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003 Sébastien Bois, Eric Paquette</p>
- * <p>Company: (ÉTS) - École de Technologie Supérieure</p>
+ * <p>Copyright: Copyright (c) 2003 Sï¿½bastien Bois, Eric Paquette</p>
+ * <p>Company: (ï¿½TS) - ï¿½cole de Technologie Supï¿½rieure</p>
  * @author unascribed
  * @version $Revision: 1.3 $
  */
@@ -37,12 +37,12 @@ public class SliderMediator implements ChangeListener
 	private JSlider sSlider;
 	private JLabel vLabel;
 	private JSlider vSlider;
-	private ImageLineFiller filler;
+	private ImageFiller filler;
 	
 	public SliderMediator(JSlider hSlider, JLabel hLabel,
-						  JSlider sSlider, JLabel sLabel,
-						  JSlider vSlider, JLabel vLabel,
-						  ImageLineFiller filler) 
+                          JSlider sSlider, JLabel sLabel,
+                          JSlider vSlider, JLabel vLabel,
+                          ImageFiller filler)
 	{
 		this.hSlider = hSlider;
 		this.hLabel = hLabel;
