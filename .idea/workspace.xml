@@ -48,10 +48,22 @@
       <file leaf-file-name="ImageFiller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controller/ImageFiller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="178" column="58" lean-forward="false" selection-start-line="178" selection-start-column="58" selection-end-line="178" selection-end-column="58" />
+            <state relative-caret-position="518">
+              <caret line="185" column="38" lean-forward="true" selection-start-line="185" selection-start-column="38" selection-end-line="185" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#8214#8215#0" expanded="true" />
+                <element signature="e#8248#8249#0" expanded="true" />
+                <element signature="e#8314#8315#0" expanded="true" />
+                <element signature="e#8346#8347#0" expanded="true" />
+                <element signature="e#8827#8828#0" expanded="true" />
+                <element signature="e#8859#8860#0" expanded="true" />
+                <element signature="e#9268#9269#0" expanded="true" />
+                <element signature="e#9303#9304#0" expanded="true" />
+                <element signature="e#9377#9378#0" expanded="true" />
+                <element signature="e#9419#9420#0" expanded="true" />
+                <element signature="e#9488#9489#0" expanded="true" />
+                <element signature="e#9525#9526#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -329,7 +341,7 @@
       <workItem from="1528489115989" duration="655000" />
       <workItem from="1529093319216" duration="2796000" />
       <workItem from="1529689164195" duration="2940000" />
-      <workItem from="1530633923014" duration="5140000" />
+      <workItem from="1530633923014" duration="5338000" />
     </task>
     <task id="LOCAL-00001" summary="cmyk color mediator">
       <created>1526667354884</created>
@@ -426,7 +438,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56701000" />
+    <option name="totallyTimeSpent" value="56899000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -912,10 +924,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/ImageFiller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="178" column="58" lean-forward="false" selection-start-line="178" selection-start-column="58" selection-end-line="178" selection-end-column="58" />
+        <state relative-caret-position="518">
+          <caret line="185" column="38" lean-forward="true" selection-start-line="185" selection-start-column="38" selection-end-line="185" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#8214#8215#0" expanded="true" />
+            <element signature="e#8248#8249#0" expanded="true" />
+            <element signature="e#8314#8315#0" expanded="true" />
+            <element signature="e#8346#8347#0" expanded="true" />
+            <element signature="e#8827#8828#0" expanded="true" />
+            <element signature="e#8859#8860#0" expanded="true" />
+            <element signature="e#9268#9269#0" expanded="true" />
+            <element signature="e#9303#9304#0" expanded="true" />
+            <element signature="e#9377#9378#0" expanded="true" />
+            <element signature="e#9419#9420#0" expanded="true" />
+            <element signature="e#9488#9489#0" expanded="true" />
+            <element signature="e#9525#9526#0" expanded="true" />
           </folding>
         </state>
       </provider>

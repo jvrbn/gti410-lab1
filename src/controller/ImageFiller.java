@@ -180,12 +180,14 @@ public class ImageFiller extends AbstractTransformer {
         double valueBorder = Color.RGBtoHSB(pixelBorder.getRed(), pixelBorder.getGreen(), pixelBorder.getBlue(),null)[2]*255;
 
 
-        if((hueBorder - hueThreshold) <= hueTest && hueTest <= (hueBorder + hueThreshold)&&
-                (saturationBorder - saturationThreshold) <= saturationTest && saturationTest <= (saturationBorder + saturationThreshold)&&
-                (valueBorder - valueThreshold) <= valueTest && valueTest <= (valueBorder + valueThreshold)){
+        if((hueBorder - getHueThreshold()) <= hueTest && hueTest <= (hueBorder + getHueThreshold())&&
+                (saturationBorder - getSaturationThreshold()) <= saturationTest && saturationTest <= (saturationBorder + getSaturationThreshold())&&
+                (valueBorder - getValueThreshold()) <= valueTest && valueTest <= (valueBorder + getValueThreshold())){
             System.out.println("false");
             return false;
         }
+
+        System.out.println("true");
         return true;
 
     }
