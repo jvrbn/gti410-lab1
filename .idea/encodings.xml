@@ -2,8 +2,18 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/controller/AbstractTransformer.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/controller/FilteringTransformer.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/controller/ImageLineFiller.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/controller/MeanFilter3x3.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/controller/TransformersIndex.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/model/BezierCurveType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/model/ImageDouble.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/model/ImageX.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/view/Application.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/view/ColorSlider.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/view/ButtonsPanel.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/view/ColorSlider.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/view/FillTransformation.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/view/FilterKernelPanel.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/view/KernelPanel.java" charset="ISO-8859-1" />
   </component>
 </project>
