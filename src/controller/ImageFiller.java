@@ -171,18 +171,18 @@ public class ImageFiller extends AbstractTransformer {
         Pixel pixelTest = this.currentImage.getPixel(currentPt.x, currentPt.y);
         Pixel pixelBorder = this.borderColor;
 
-        double hueATester = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[0]*255;
-        double saturationATester = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[1]*255;
-        double valueATester = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[2]*255;
+        double hueTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[0]*255;
+        double saturationTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[1]*255;
+        double valueTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[2]*255;
 
-        double hueBoundary = Color.RGBtoHSB(pixelBorder.getRed(), pixelBorder.getGreen(), pixelBorder.getBlue(),null)[0]*255;
-        double saturationBoundary = Color.RGBtoHSB(pixelBorder.getRed(), pixelBorder.getGreen(), pixelBorder.getBlue(),null)[1]*255;
-        double valueBoundary = Color.RGBtoHSB(pixelBorder.getRed(), pixelBorder.getGreen(), pixelBorder.getBlue(),null)[2]*255;
+        double hueBorder = Color.RGBtoHSB(pixelBorder.getRed(), pixelBorder.getGreen(), pixelBorder.getBlue(),null)[0]*255;
+        double saturationBorder = Color.RGBtoHSB(pixelBorder.getRed(), pixelBorder.getGreen(), pixelBorder.getBlue(),null)[1]*255;
+        double valueBorder = Color.RGBtoHSB(pixelBorder.getRed(), pixelBorder.getGreen(), pixelBorder.getBlue(),null)[2]*255;
 
 
-        if((hueBoundary - hueThreshold) <= hueATester && hueATester <= (hueBoundary + hueThreshold)&&
-                (saturationBoundary - saturationThreshold) <= saturationATester && saturationATester <= (saturationBoundary + saturationThreshold)&&
-                (valueBoundary - valueThreshold) <= valueATester && valueATester <= (valueBoundary + valueThreshold)){
+        if((hueBorder - hueThreshold) <= hueTest && hueTest <= (hueBorder + hueThreshold)&&
+                (saturationBorder - saturationThreshold) <= saturationTest && saturationTest <= (saturationBorder + saturationThreshold)&&
+                (valueBorder - valueThreshold) <= valueTest && valueTest <= (valueBorder + valueThreshold)){
             System.out.println("false");
             return false;
         }
