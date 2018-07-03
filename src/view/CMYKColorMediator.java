@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.org.apache.regexp.internal.RE;
 import model.ObserverIF;
 import model.Pixel;
 

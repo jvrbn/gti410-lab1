@@ -14,11 +14,12 @@
 */
 
 package controller;
-import javafx.geometry.Point3DBuilder;
-import model.*;
+import model.ImageX;
+import model.Pixel;
+import model.Shape;
 
-import java.awt.Point;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.List;
 import java.util.Stack;
