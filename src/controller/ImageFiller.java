@@ -14,10 +14,12 @@
 */
 
 package controller;
-import model.*;
+import model.ImageX;
+import model.Pixel;
+import model.Shape;
 
-import java.awt.Point;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.NoninvertibleTransformException;
 import java.util.List;
 import java.util.Stack;
@@ -72,7 +74,15 @@ public class ImageFiller extends AbstractTransformer {
                 if (0 <= ptTransformed.x && ptTransformed.x < currentImage.getImageWidth() &&
                         0 <= ptTransformed.y && ptTransformed.y < currentImage.getImageHeight()) {
                     currentImage.beginPixelUpdate();
-                    borderFill(ptTransformed);
+
+                    if(isFloodFill()){
+                        floodFill(ptTransformed);
+
+                    }
+                    else{
+                        borderFill(ptTransformed);
+                    }
+
                     currentImage.endPixelUpdate();
                     return true;
                 }
@@ -113,6 +123,25 @@ public class ImageFiller extends AbstractTransformer {
 
     private void floodFill(Point ptClicked){
 
+        Stack stack = new Stack();
+        stack.push(ptClicked);
+        while (!stack.empty()){
+            Point current = (Point)stack.pop();
+            if(0 <= current.x && current.x < currentImage.getImageWidth() && 0 <= current.y && current.y < currentImage.getImageHeight()  &&
+                    !currentImage.getPixel(current.x, current.y).equals(fillColor) && thresholdColor(current, fillColor)){
+
+                currentImage.setPixel(current.x, current.y, fillColor);
+
+                Point nextLeft = new Point(current.x-1, current.y);
+                Point nextRight = new Point(current.x+1, current.y);
+                Point nextTop = new Point(current.x, current.y+1);
+                Point nextBottom = new Point(current.x, current.y-1);
+                stack.push(nextLeft);
+                stack.push(nextRight);
+                stack.push(nextTop);
+                stack.push(nextBottom);
+            }
+        }
     }
 
     private void borderFill(Point ptClicked){
@@ -120,7 +149,9 @@ public class ImageFiller extends AbstractTransformer {
         stack.push(ptClicked);
         while(!stack.empty()){
             Point current = (Point)stack.pop();
-            if(0 <= current.x && current.x < currentImage.getImageWidth() && ! currentImage.getPixel(current.x, current.y).equals(fillColor)){
+            if(0 <= current.x && current.x < currentImage.getImageWidth() && 0 <= current.y && current.y < currentImage.getImageHeight() &&
+                    !currentImage.getPixel(current.x, current.y).equals(fillColor) && thresholdColor(current, borderColor)){
+
                 currentImage.setPixel(current.x, current.y, fillColor);
 
                 //Next points to fill
@@ -134,6 +165,30 @@ public class ImageFiller extends AbstractTransformer {
                 stack.push(nextBottom);
             }
         }
+    }
+
+    public boolean thresholdColor(Point currentPt, Pixel borderOrFlood){
+
+        Pixel pixelTest = this.currentImage.getPixel(currentPt.x, currentPt.y);
+
+        double hueTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[0]*255;
+        double saturationTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[1]*255;
+        double valueTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[2]*255;
+
+        double hueBorder = Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),null)[0]*255;
+        double saturationBorder = Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),null)[1]*255;
+        double valueBorder = Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),null)[2]*255;
+
+
+        if((hueBorder - getHueThreshold()) <= hueTest && hueTest <= (hueBorder + getHueThreshold())&&
+                (saturationBorder - getSaturationThreshold()) <= saturationTest && saturationTest <= (saturationBorder + getSaturationThreshold())&&
+                (valueBorder - getValueThreshold()) <= valueTest && valueTest <= (valueBorder + getValueThreshold())){
+            System.out.println("false");
+            return false;
+        }
+
+        System.out.println("true");
+        return true;
 
     }
 
