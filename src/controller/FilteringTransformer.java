@@ -17,22 +17,20 @@ package controller;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import model.ImageDouble;
-import model.ImageX;
-import model.Shape;
+import model.*;
 
 /**
  * 
  * <p>Title: FilteringTransformer</p>
  * <p>Description: ... (AbstractTransformer)</p>
- * <p>Copyright: Copyright (c) 2004 Sébastien Bois, Eric Paquette</p>
- * <p>Company: (ÉTS) - École de Technologie Supérieure</p>
+ * <p>Copyright: Copyright (c) 2004 Sï¿½bastien Bois, Eric Paquette</p>
+ * <p>Company: (ï¿½TS) - ï¿½cole de Technologie Supï¿½rieure</p>
  * @author unascribed
  * @version $Revision: 1.6 $
  */
 public class FilteringTransformer extends AbstractTransformer{
 	Filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
-	
+	Filter myfilter = new MyFilter(new PaddingMyStrategy(), new ImageMyStrategy());
 	/**
 	 * @param _coordinates
 	 * @param _value
