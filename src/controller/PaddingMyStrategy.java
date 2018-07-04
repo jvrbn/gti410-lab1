@@ -9,6 +9,7 @@ public class PaddingMyStrategy extends PaddingStrategy {
     public Pixel pixelAt(ImageX image, int x, int y){
 
 
+
     }
 
     public PixelDouble pixelAt(ImageDouble image, int x, int y){
