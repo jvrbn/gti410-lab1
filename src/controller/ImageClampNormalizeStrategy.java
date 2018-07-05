@@ -42,10 +42,10 @@ public class ImageClampNormalizeStrategy extends ImageConversionStrategy {
 			for (int y = 0; y < imageHeight; y++) {
 				curPixelDouble = image.getPixel(x,y);
 				
-				newImage.setPixel(x, y, new Pixel((int)(clamp0To255(curPixelDouble.getRed())),
-												  (int)(clamp0To255(curPixelDouble.getGreen())),
-												  (int)(clamp0To255(curPixelDouble.getBlue())),
-												  (int)(clamp0To255(curPixelDouble.getAlpha()))));
+				newImage.setPixel(x, y, new Pixel((int)(normalize0to255(curPixelDouble.getRed())),
+												  (int)(normalize0to255(curPixelDouble.getGreen())),
+												  (int)(normalize0to255(curPixelDouble.getBlue())),
+												  (int)(normalize0to255(curPixelDouble.getAlpha()))));
 			}
 		}
 		newImage.endPixelUpdate();
@@ -59,5 +59,9 @@ public class ImageClampNormalizeStrategy extends ImageConversionStrategy {
 			value = 255;
 			
 		return value;
+	}
+
+	private double normalize0to255(double value){
+		return Double.parseDouble(null);
 	}
 }

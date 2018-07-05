@@ -37,16 +37,52 @@ public class PaddingMirrorStrategy extends PaddingStrategy {
 	 * @param image source Image
 	 * @param x x coordinate
 	 * @param y y coordinate
-	 * @return the validated Pixel value at the specified coordinates 
+	 * @return the validated Pixel value at the specified coordinates
 	 */
 	public Pixel pixelAt(ImageX image, int x, int y) {
 		if ((x > 0) && (x < image.getImageWidth()) &&
 			(y > 0) && (y < image.getImageHeight())) {
 			return image.getPixel(x, y);
 		} else {
-			return zeroPixel;
+
+			if(x <= 0 && y <= 0){
+			   return image.getPixel(1,1);
+			    //y = -1;
+            }
+
+            else if(x <= 0 && y < image.getImageHeight()){
+			    return image.getPixel(x,0);
+			    //x = -1;
+			    //y = 0;
+            }
+
+            else if(y <= 0 && x < image.getImageWidth()){
+                return image.getPixel(0,y);
+			    //x = 0;
+                //y = -1;
+            }
+
+            else if(x >= image.getImageWidth() && y >= image.getImageHeight()){
+                return image.getPixel(image.getImageWidth(),image.getImageHeight());
+			    //x = 1;
+                //y = 1;
+            }
+
+            else if((x > 0 && x < image.getImageWidth())&& y > image.getImageHeight()){
+                return image.getPixel(image.getImageWidth(),y);
+			    //x = 0;
+                //y = 1;
+            }
+
+            else if((y > 0 && y < image.getImageHeight()) && x > image.getImageWidth()){
+                return image.getPixel(x,image.getImageHeight());
+			    //x = 1;
+                //y = 0;
+
+            }
 		}
-	}
+        return image.getPixel(x,y);
+    }
 
 	/**
 	 * Returns and validates the PixelDouble at the specified coordinate.
@@ -64,7 +100,42 @@ public class PaddingMirrorStrategy extends PaddingStrategy {
 			(y >= 0) && (y < image.getImageHeight())) {
 			return image.getPixel(x, y);
 		} else {
-			return zeroPixelDouble;
-		}
-	}
+
+            if(x <= 0 && y <= 0){
+                return image.getPixel(1,1);
+                //y = -1;
+            }
+
+            else if(x <= 0 && y < image.getImageHeight()){
+                return image.getPixel(x,0);
+                //x = -1;
+                //y = 0;
+            }
+
+            else if(y <= 0 && x < image.getImageWidth()){
+                return image.getPixel(0,y);
+                //x = 0;
+                //y = -1;
+            }
+
+            else if(x >= image.getImageWidth() && y >= image.getImageHeight()){
+                return image.getPixel(image.getImageWidth(),image.getImageHeight());
+                //x = 1;
+                //y = 1;
+            }
+
+            else if((x > 0 && x < image.getImageWidth())&& y > image.getImageHeight()){
+                return image.getPixel(image.getImageWidth(),y);
+                //x = 0;
+                //y = 1;
+            }
+
+            else if((y > 0 && y < image.getImageHeight()) && x > image.getImageWidth()){
+                return image.getPixel(x,image.getImageHeight());
+                //x = 1;
+                //y = 0;
+            }
+        }
+        return image.getPixel(x,y);
+    }
 }

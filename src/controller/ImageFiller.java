@@ -76,13 +76,11 @@ public class ImageFiller extends AbstractTransformer {
                     currentImage.beginPixelUpdate();
 
                     if(isFloodFill()){
-                        floodFill(ptTransformed);
-
+                        floodFill(ptTransformed, fillColor);
                     }
                     else{
-                        borderFill(ptTransformed);
+                        borderFill(ptTransformed, borderColor);
                     }
-
                     currentImage.endPixelUpdate();
                     return true;
                 }
@@ -121,14 +119,14 @@ public class ImageFiller extends AbstractTransformer {
     }
      */
 
-    private void floodFill(Point ptClicked){
+    private void floodFill(Point ptClicked, Pixel color){
 
         Stack stack = new Stack();
         stack.push(ptClicked);
         while (!stack.empty()){
             Point current = (Point)stack.pop();
             if(0 <= current.x && current.x < currentImage.getImageWidth() && 0 <= current.y && current.y < currentImage.getImageHeight()  &&
-                    !currentImage.getPixel(current.x, current.y).equals(fillColor) && thresholdColor(current, fillColor)){
+                    !currentImage.getPixel(current.x, current.y).equals(fillColor) && thresholdColor(current, color)){
 
                 currentImage.setPixel(current.x, current.y, fillColor);
 
@@ -140,21 +138,21 @@ public class ImageFiller extends AbstractTransformer {
                 stack.push(nextRight);
                 stack.push(nextTop);
                 stack.push(nextBottom);
+                setFloodFill(true);
             }
         }
     }
+    private void borderFill(Point ptClicked, Pixel color){
 
-    private void borderFill(Point ptClicked){
         Stack stack = new Stack();
         stack.push(ptClicked);
-        while(!stack.empty()){
+        while (!stack.empty()){
             Point current = (Point)stack.pop();
-            if(0 <= current.x && current.x < currentImage.getImageWidth() && 0 <= current.y && current.y < currentImage.getImageHeight() &&
-                    !currentImage.getPixel(current.x, current.y).equals(fillColor) && thresholdColor(current, borderColor)){
+            if(0 <= current.x && current.x < currentImage.getImageWidth() && 0 <= current.y && current.y < currentImage.getImageHeight()  &&
+                    !currentImage.getPixel(current.x, current.y).equals(borderColor) && thresholdColor(current, color)){
 
                 currentImage.setPixel(current.x, current.y, fillColor);
 
-                //Next points to fill
                 Point nextLeft = new Point(current.x-1, current.y);
                 Point nextRight = new Point(current.x+1, current.y);
                 Point nextTop = new Point(current.x, current.y+1);
@@ -163,31 +161,35 @@ public class ImageFiller extends AbstractTransformer {
                 stack.push(nextRight);
                 stack.push(nextTop);
                 stack.push(nextBottom);
+                setFloodFill(false);
             }
         }
     }
 
     public boolean thresholdColor(Point currentPt, Pixel borderOrFlood){
 
-        Pixel pixelTest = this.currentImage.getPixel(currentPt.x, currentPt.y);
+        Pixel pixelConsiderer = this.currentImage.getPixel(currentPt.x, currentPt.y);
 
-        double hueTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[0]*255;
-        double saturationTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[1]*255;
-        double valueTest = Color.RGBtoHSB(pixelTest.getRed(), pixelTest.getGreen(), pixelTest.getBlue(),null)[2]*255;
+        float [] hsv = new float[3];
+        float [] hsvBorder = new float[3];
 
-        double hueBorder = Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),null)[0]*255;
-        double saturationBorder = Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),null)[1]*255;
-        double valueBorder = Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),null)[2]*255;
+        Color.RGBtoHSB(pixelConsiderer.getRed(), pixelConsiderer.getGreen(), pixelConsiderer.getBlue(),hsv);
+        Color.RGBtoHSB(pixelConsiderer.getRed(), pixelConsiderer.getGreen(), pixelConsiderer.getBlue(),hsv);
+        Color.RGBtoHSB(pixelConsiderer.getRed(), pixelConsiderer.getGreen(), pixelConsiderer.getBlue(),hsv);
+
+        Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),hsvBorder);
+        Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),hsvBorder);
+        Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),hsvBorder);
 
 
-        if((hueBorder - getHueThreshold()) <= hueTest && hueTest <= (hueBorder + getHueThreshold())&&
-                (saturationBorder - getSaturationThreshold()) <= saturationTest && saturationTest <= (saturationBorder + getSaturationThreshold())&&
-                (valueBorder - getValueThreshold()) <= valueTest && valueTest <= (valueBorder + getValueThreshold())){
-            System.out.println("false");
+        if((hsvBorder[0]*255 - getHueThreshold()) <= hsv[0]*255 && hsv[0]*255 <= (hsvBorder[0]*255 + getHueThreshold())&&
+                (hsvBorder[1]*255 - getSaturationThreshold()) <= hsv[1]*255 && hsv[1]*255 <= (hsvBorder[1]*255 + getSaturationThreshold())&&
+                (hsvBorder[2]*255 - getValueThreshold()) <= hsv[2]*255 && hsv[2]*255 <= (hsvBorder[2]*255 + getValueThreshold())){
+            //System.out.println("false");
             return false;
         }
 
-        System.out.println("true");
+        //System.out.println("true");
         return true;
 
     }
