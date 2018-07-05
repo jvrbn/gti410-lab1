@@ -40,48 +40,71 @@ public class PaddingMirrorStrategy extends PaddingStrategy {
 	 * @return the validated Pixel value at the specified coordinates
 	 */
 	public Pixel pixelAt(ImageX image, int x, int y) {
-		if ((x > 0) && (x < image.getImageWidth()) &&
-			(y > 0) && (y < image.getImageHeight())) {
-			return image.getPixel(x, y);
-		} else {
 
-			if(x <= 0 && y <= 0){
-			   return image.getPixel(1,1);
-			    //y = -1;
+        Pixel pixel = null;
+
+        if ((x > 0) && (x < image.getImageWidth()) &&
+                (y > 0) && (y < image.getImageHeight())) {
+            return image.getPixel(x, y);
+        } else {
+
+            //coin
+            if(x <= 0 && y <= 0){
+
+                return image.getPixel(0,0);
             }
 
-            else if(x <= 0 && y < image.getImageHeight()){
-			    return image.getPixel(x,0);
-			    //x = -1;
-			    //y = 0;
-            }
+            else if(x < 0 && (y >= 0 && y<=image.getImageHeight()-1)){
 
-            else if(y <= 0 && x < image.getImageWidth()){
                 return image.getPixel(0,y);
-			    //x = 0;
-                //y = -1;
             }
 
-            else if(x >= image.getImageWidth() && y >= image.getImageHeight()){
-                return image.getPixel(image.getImageWidth(),image.getImageHeight());
-			    //x = 1;
+
+            //coin
+            else if(x <= 0 && y >= image.getImageHeight()-1){
+
+                pixel = image.getPixel(0,image.getImageHeight()-1);
+            }
+
+
+            else if(y < 0 && (x >= 0 && x <= image.getImageWidth()-1)){
+
+                pixel = image.getPixel(x,0);
+            }
+
+            //coin
+            else if(x >= image.getImageWidth()-1 && y >= image.getImageHeight()-1){
+
+                pixel = image.getPixel(image.getImageWidth()-1,image.getImageHeight()-1);
+                //x = 1;
                 //y = 1;
             }
 
-            else if((x > 0 && x < image.getImageWidth())&& y > image.getImageHeight()){
-                return image.getPixel(image.getImageWidth(),y);
-			    //x = 0;
+
+            //coin
+            else if(x >= image.getImageWidth()-1 && y <= 0 ){
+                pixel = image.getPixel(image.getImageWidth()-1,0);
+                //x = 1;
                 //y = 1;
             }
 
-            else if((y > 0 && y < image.getImageHeight()) && x > image.getImageWidth()){
-                return image.getPixel(x,image.getImageHeight());
-			    //x = 1;
+            else if((x >= 0 && x <= image.getImageWidth()-1) && y > image.getImageHeight()-1){
+                pixel = image.getPixel(x,image.getImageHeight()-1);
+                //x = 0;
+                //y = 1;
+            }
+
+
+            else if((y >= 0 && y <= image.getImageHeight()) && x > image.getImageWidth()){
+                pixel = image.getPixel(image.getImageWidth()-1,y);
+                //x = 1;
                 //y = 0;
-
             }
-		}
-        return image.getPixel(x,y);
+            else{
+                pixel = image.getPixel(x,y);
+            }
+        }
+        return pixel;
     }
 
 	/**
@@ -95,47 +118,70 @@ public class PaddingMirrorStrategy extends PaddingStrategy {
 	 */	
 	public PixelDouble pixelAt(ImageDouble image, int x, int y) {
 		PixelDouble pixel = null;
-		
-		if ((x >= 0) && (x < image.getImageWidth()) &&
-			(y >= 0) && (y < image.getImageHeight())) {
-			return image.getPixel(x, y);
-		} else {
 
+        //Pixel pixel = null;
+
+        if ((x > 0) && (x < image.getImageWidth()) &&
+                (y > 0) && (y < image.getImageHeight())) {
+            return image.getPixel(x, y);
+        } else {
+
+            //coin
             if(x <= 0 && y <= 0){
-                return image.getPixel(1,1);
-                //y = -1;
+
+                return image.getPixel(0,0);
             }
 
-            else if(x <= 0 && y < image.getImageHeight()){
-                return image.getPixel(x,0);
-                //x = -1;
-                //y = 0;
-            }
+            else if(x < 0 && (y >= 0 && y<=image.getImageHeight()-1)){
 
-            else if(y <= 0 && x < image.getImageWidth()){
                 return image.getPixel(0,y);
-                //x = 0;
-                //y = -1;
             }
 
-            else if(x >= image.getImageWidth() && y >= image.getImageHeight()){
-                return image.getPixel(image.getImageWidth(),image.getImageHeight());
+
+            //coin
+            else if(x <= 0 && y >= image.getImageHeight()-1){
+
+                pixel = image.getPixel(0,image.getImageHeight()-1);
+            }
+
+
+            else if(y < 0 && (x >= 0 && x <= image.getImageWidth()-1)){
+
+                pixel = image.getPixel(x,0);
+            }
+
+            //coin
+            else if(x >= image.getImageWidth()-1 && y >= image.getImageHeight()-1){
+
+                pixel = image.getPixel(image.getImageWidth()-1,image.getImageHeight()-1);
+			    //x = 1;
+                //y = 1;
+            }
+
+
+            //coin
+            else if(x >= image.getImageWidth()-1 && y <= 0 ){
+                pixel = image.getPixel(image.getImageWidth()-1,0);
                 //x = 1;
                 //y = 1;
             }
 
-            else if((x > 0 && x < image.getImageWidth())&& y > image.getImageHeight()){
-                return image.getPixel(image.getImageWidth(),y);
-                //x = 0;
+            else if((x >= 0 && x <= image.getImageWidth()-1) && y > image.getImageHeight()-1){
+                pixel = image.getPixel(x,image.getImageHeight()-1);
+			    //x = 0;
                 //y = 1;
             }
 
-            else if((y > 0 && y < image.getImageHeight()) && x > image.getImageWidth()){
-                return image.getPixel(x,image.getImageHeight());
-                //x = 1;
+
+            else if((y >= 0 && y <= image.getImageHeight()-1) && x > image.getImageWidth()-1){
+                pixel = image.getPixel(image.getImageWidth()-1,y);
+			    //x = 1;
                 //y = 0;
+            }
+            else{
+                pixel = image.getPixel(x,y);
             }
         }
-        return image.getPixel(x,y);
+        return pixel;
     }
 }

@@ -83,7 +83,7 @@ public class FilteringTransformer extends AbstractTransformer{
             System.out.println(string);
 
         }
-        else if(string.equals("Copy")){
+        else if(string.equals("Mirror")){
 	        myFilter.setPaddingStrategy(new PaddingMirrorStrategy());
             System.out.println(string);
 
@@ -99,8 +99,8 @@ public class FilteringTransformer extends AbstractTransformer{
 	        myFilter.setImageConversionStrategy(new ImageClampStrategy());
             System.out.println(string);
         }
-        else if(string.equals("Normalize 0 to 255")){
-	        myFilter.setImageConversionStrategy(new ImageClampNormalizeStrategy());
+        else if(string.equals("Abs and normalize to 255")){
+	        myFilter.setImageConversionStrategy(new ImageClampAbsNormalizeStrategy());
         }
 
 	    System.out.println(string);

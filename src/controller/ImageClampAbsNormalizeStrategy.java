@@ -27,7 +27,7 @@ import model.PixelDouble;
  * @author unascribed
  * @version $Revision: 1.8 $
  */
-public class ImageClampNormalizeStrategy extends ImageConversionStrategy {
+public class ImageClampAbsNormalizeStrategy extends ImageConversionStrategy {
 	/**
 	 * Converts an ImageDouble to an ImageX using a clamping strategy (0-255).
 	 */
@@ -42,16 +42,17 @@ public class ImageClampNormalizeStrategy extends ImageConversionStrategy {
 			for (int y = 0; y < imageHeight; y++) {
 				curPixelDouble = image.getPixel(x,y);
 				
-				newImage.setPixel(x, y, new Pixel((int)(normalize0to255(curPixelDouble.getRed())),
-												  (int)(normalize0to255(curPixelDouble.getGreen())),
-												  (int)(normalize0to255(curPixelDouble.getBlue())),
-												  (int)(normalize0to255(curPixelDouble.getAlpha()))));
+				newImage.setPixel(x, y, new Pixel((int)(Absnormalize255(curPixelDouble.getRed())),
+												  (int)(Absnormalize255(curPixelDouble.getGreen())),
+												  (int)(Absnormalize255(curPixelDouble.getBlue())),
+												  (int)(Absnormalize255(curPixelDouble.getAlpha()))));
 			}
 		}
 		newImage.endPixelUpdate();
 		return newImage;
 	}
-	
+
+	/*
 	private double clamp0To255(double value) {
 		if (value < 0)
 			value = 0;
@@ -60,8 +61,18 @@ public class ImageClampNormalizeStrategy extends ImageConversionStrategy {
 			
 		return value;
 	}
+	*/
 
-	private double normalize0to255(double value){
-		return Double.parseDouble(null);
+	private double Absnormalize255(double value){
+
+
+		if(value < 0){
+			value = Math.abs(value);
+		}
+		else if ( value > 255){
+			value = 255;
+		}
+
+		return value;
 	}
 }
