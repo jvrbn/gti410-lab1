@@ -29,8 +29,8 @@ import model.*;
  * @version $Revision: 1.6 $
  */
 public class FilteringTransformer extends AbstractTransformer{
-	Filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
-	Filter myfilter = new MyFilter(new PaddingMyStrategy(), new ImageMyStrategy());
+	//filter filter = new MeanFilter3x3(new PaddingZeroStrategy(), new ImageClampStrategy());
+	MyFilter myFilter = new MyFilter(new PaddingZeroStrategy(), new ImageClampStrategy());
 	/**
 	 * @param _coordinates
 	 * @param _value
@@ -39,6 +39,7 @@ public class FilteringTransformer extends AbstractTransformer{
 		System.out.println("[" + (_coordinates.getColumn() - 1) + "]["
                                    + (_coordinates.getRow() - 1) + "] = " 
                                    + _value);
+		myFilter.updateKernel(_coordinates, _value);
 	}
 		
 	/**
@@ -52,8 +53,8 @@ public class FilteringTransformer extends AbstractTransformer{
 			Shape shape = (Shape)intersectedObjects.get(0);			
 			if (shape instanceof ImageX) {				
 				ImageX currentImage = (ImageX)shape;
-				ImageDouble filteredImage = filter.filterToImageDouble(currentImage);
-				ImageX filteredDisplayableImage = filter.getImageConversionStrategy().convert(filteredImage);
+				ImageDouble filteredImage = myFilter.filterToImageDouble(currentImage);
+				ImageX filteredDisplayableImage = myFilter.getImageConversionStrategy().convert(filteredImage);
 				currentImage.beginPixelUpdate();
 				
 				for (int i = 0; i < currentImage.getImageWidth(); ++i) {
@@ -76,13 +77,32 @@ public class FilteringTransformer extends AbstractTransformer{
 	 * @param string
 	 */
 	public void setBorder(String string) {
-		System.out.println(string);
+
+	    if(string.equals("0")){
+	        myFilter.setPaddingStrategy(new PaddingZeroStrategy());
+            System.out.println(string);
+
+        }
+        else if(string.equals("Copy")){
+	        myFilter.setPaddingStrategy(new PaddingMirrorStrategy());
+            System.out.println(string);
+
+        }
 	}
 
 	/**
 	 * @param string
 	 */
 	public void setClamp(String string) {
-		System.out.println(string);
+
+	    if(string.equals("Clamp 0...255")){
+	        myFilter.setImageConversionStrategy(new ImageClampStrategy());
+            System.out.println(string);
+        }
+        else if(string.equals("Normalize 0 to 255")){
+	        myFilter.setImageConversionStrategy(new ImageClampNormalizeStrategy());
+        }
+
+	    System.out.println(string);
 	}
 }
