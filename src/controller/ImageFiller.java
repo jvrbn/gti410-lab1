@@ -79,7 +79,7 @@ public class ImageFiller extends AbstractTransformer {
                         floodFill(ptTransformed, fillColor);
                     }
                     else{
-                        borderFill(ptTransformed, borderColor);
+                        borderFill(ptTransformed, fillColor);
                     }
                     currentImage.endPixelUpdate();
                     return true;
@@ -126,7 +126,7 @@ public class ImageFiller extends AbstractTransformer {
         while (!stack.empty()){
             Point current = (Point)stack.pop();
             if(0 <= current.x && current.x < currentImage.getImageWidth() && 0 <= current.y && current.y < currentImage.getImageHeight()  &&
-                    !currentImage.getPixel(current.x, current.y).equals(fillColor) && thresholdColor(current, color)){
+                    !currentImage.getPixel(current.x, current.y).equals(fillColor)){
 
                 currentImage.setPixel(current.x, current.y, fillColor);
 
@@ -161,12 +161,12 @@ public class ImageFiller extends AbstractTransformer {
                 stack.push(nextRight);
                 stack.push(nextTop);
                 stack.push(nextBottom);
-                setFloodFill(false);
+
             }
         }
     }
 
-    public boolean thresholdColor(Point currentPt, Pixel borderOrFlood){
+    public boolean thresholdColor(Point currentPt, Pixel borderColor){
 
         Pixel pixelConsiderer = this.currentImage.getPixel(currentPt.x, currentPt.y);
 
@@ -177,19 +177,17 @@ public class ImageFiller extends AbstractTransformer {
         Color.RGBtoHSB(pixelConsiderer.getRed(), pixelConsiderer.getGreen(), pixelConsiderer.getBlue(),hsv);
         Color.RGBtoHSB(pixelConsiderer.getRed(), pixelConsiderer.getGreen(), pixelConsiderer.getBlue(),hsv);
 
-        Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),hsvBorder);
-        Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),hsvBorder);
-        Color.RGBtoHSB(borderOrFlood.getRed(), borderOrFlood.getGreen(), borderOrFlood.getBlue(),hsvBorder);
+        Color.RGBtoHSB(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue(),hsvBorder);
+        Color.RGBtoHSB(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue(),hsvBorder);
+        Color.RGBtoHSB(borderColor.getRed(), borderColor.getGreen(), borderColor.getBlue(),hsvBorder);
 
 
         if((hsvBorder[0]*255 - getHueThreshold()) <= hsv[0]*255 && hsv[0]*255 <= (hsvBorder[0]*255 + getHueThreshold())&&
                 (hsvBorder[1]*255 - getSaturationThreshold()) <= hsv[1]*255 && hsv[1]*255 <= (hsvBorder[1]*255 + getSaturationThreshold())&&
                 (hsvBorder[2]*255 - getValueThreshold()) <= hsv[2]*255 && hsv[2]*255 <= (hsvBorder[2]*255 + getValueThreshold())){
-            //System.out.println("false");
+
             return false;
         }
-
-        //System.out.println("true");
         return true;
 
     }
